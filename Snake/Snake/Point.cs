@@ -32,16 +32,19 @@ namespace Snake
 
         public void Move(int offset, Direction direction)
         {
-            if(direction == Direction.RIGHT)
+            if (direction == Direction.RIGHT)
             {
                 x = x + offset;
-            } else if(direction == Direction.LEFT)
+            }
+            else if (direction == Direction.LEFT)
             {
                 x = x - offset;
-            } else if(direction == Direction.UP)
+            }
+            else if (direction == Direction.UP)
             {
                 y = y - offset;
-            } else if(direction == Direction.DOWN)
+            }
+            else if (direction == Direction.DOWN)
             {
                 y = y + offset;
             }
@@ -57,6 +60,11 @@ namespace Snake
         {
             sym = ' ';
             Draw();
+        }
+
+        internal bool IsHit(Point food)
+        {
+            return x == food.x && y == food.y;
         }
     }
 }
