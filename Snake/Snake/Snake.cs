@@ -6,10 +6,12 @@ namespace Snake
 {
     internal class Snake : Figure
     {
+        private int _snakeSpeed;
         private Direction _direction;
-        public Snake(Point tail, int length, Direction direction)
+        public Snake(Point tail, int length, Direction direction, int snakeSpeed)
         {
             _direction = direction;
+            _snakeSpeed = snakeSpeed;
             PList = new List<Point>();
             for (var i = 0; i < length; i++)
             {
@@ -58,6 +60,7 @@ namespace Snake
                 food.Sym = head.Sym;
                 food.Draw();
                 PList.Add(food);
+                _snakeSpeed = Math.Max(_snakeSpeed--, 10);
                 return true;
             }
             else return false;

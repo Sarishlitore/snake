@@ -6,6 +6,7 @@ namespace Snake
         private static void Main()
         {
             Game.ChangeMapSize(80, 20);
+            
             Game.Start();
         }
     }
