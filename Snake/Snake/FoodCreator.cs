@@ -8,14 +8,12 @@ namespace Snake
         private readonly int _mapHeight;
         private readonly char _sym;
         private readonly Random _random = new Random();
-
         public FoodCreator(int mapWidth, int mapHeight, char sym)
         {
             this._mapWidth = mapWidth;
             this._mapHeight = mapHeight;
             this._sym = sym;
         }
-
         public Point CreateFood()
         {
             var x = _random.Next(2, _mapWidth - 2);

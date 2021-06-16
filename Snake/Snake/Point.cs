@@ -1,70 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Snake
 {
-    class Point
+    internal class Point
     {
-        public int x;
-        public int y;
-        public char sym;
-
-        public Point()
+        public int X;
+        public int Y;
+        public char Sym;
+        public Point(int x, int y, char sym)
         {
+            X = x;
+            Y = y;
+            Sym = sym;
         }
-
-        public Point(int _x, int _y, char _sym)
-        {
-            x = _x;
-            y = _y;
-            sym = _sym;
-        }
-
         public Point(Point p)
         {
-            x = p.x;
-            y = p.y;
-            sym = p.sym;
+            X = p.X;
+            Y = p.Y;
+            Sym = p.Sym;
         }
-
         public void Move(int offset, Direction direction)
         {
-            if (direction == Direction.RIGHT)
-            {
-                x = x + offset;
-            }
-            else if (direction == Direction.LEFT)
-            {
-                x = x - offset;
-            }
-            else if (direction == Direction.UP)
-            {
-                y = y - offset;
-            }
-            else if (direction == Direction.DOWN)
-            {
-                y = y + offset;
-            }
+            if (direction == Direction.Right) X += offset;
+            else if (direction == Direction.Left) X -= offset;
+            else if (direction == Direction.Up) Y -= offset;
+            else if (direction == Direction.Down) Y += offset;
         }
-
         public void Draw()
         {
-            Console.SetCursorPosition(x, y);
-            Console.Write(sym);
+            Console.SetCursorPosition(X, Y);
+            Console.Write(Sym);
         }
-
         public void Clear()
         {
-            sym = ' ';
+            Sym = ' ';
             Draw();
         }
-
         internal bool IsHit(Point food)
         {
-            return x == food.x && y == food.y;
+            return X == food.X && Y == food.Y;
         }
     }
 }

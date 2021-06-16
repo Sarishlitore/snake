@@ -24,7 +24,7 @@ namespace Snake
         // Initial symbol of food by default
         private static char _symFood = '$';
         private static Wall _wall = new Wall(_mapWidth, _mapHeight, _symWall);
-        private static Snake _snake= new Snake(new Point(_startX, _startY, _symSnake), startLength, Direction.RIGHT);
+        private static Snake _snake= new Snake(new Point(_startX, _startY, _symSnake), startLength, Direction.Right);
         private static FoodCreator _foodCreator= new FoodCreator(_mapWidth, _mapHeight, _symFood);
         private static Point _food = _foodCreator.CreateFood();
         public static void ChangeMapSize(int mapWidth, int mapHeight)
@@ -39,11 +39,10 @@ namespace Snake
         {
             Game._snakeSpeed = snakeSpeed;
         }
-
         private static void Init()
         {
             _wall = new Wall(_mapWidth, _mapHeight, _symWall);
-            _snake= new Snake(new Point(_startX, _startY, _symSnake), startLength, Direction.RIGHT);
+            _snake= new Snake(new Point(_startX, _startY, _symSnake), startLength, Direction.Right);
             _foodCreator= new FoodCreator(_mapWidth, _mapHeight, _symFood);
             _food = _foodCreator.CreateFood();
         }
