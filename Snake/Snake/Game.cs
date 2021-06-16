@@ -1,62 +1,79 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace Snake
 {
     public static class Game
     {
-        private static int mapWidth = 30;
-        private static int mapHeight = 20;
-        private static int startX = 15;
-        private static int startY = 10;
-        private static int startLength = 3;
-        private static char symWall = '+';
-        private static char symSnake = '*';
-        private static char symFood = '$';
-        private static Wall wall = new Wall(mapWidth, mapHeight, symWall);
-        private static Snake snake= new Snake(new Point(startX, startY, symSnake), startLength, Direction.RIGHT);
-        private static FoodCreator foodCreator= new FoodCreator(mapWidth, mapHeight, symFood);
-        private static Point food = foodCreator.CreateFood();
-        
-        public static void ChangeMapSize(int _mapWidth, int _mapHeight)
+        // Map width by default
+        private static int _mapWidth = 30; 
+        // Map height by default
+        private static int _mapHeight = 20; 
+        // Initial snake x.coordinate by default
+        private static int _startX = 15; 
+        // Initial snake y.coordinate by default
+        private static int _startY = 10; 
+        // Initial snake size by default
+        private static int startLength = 3; 
+        // Initial snake speed by default
+        private static int _snakeSpeed = 150;
+        // Initial symbol of wall by default
+        private static char _symWall = '+';
+        // Initial symbol of Snake by default
+        private static char _symSnake = '*';
+        // Initial symbol of food by default
+        private static char _symFood = '$';
+        private static Wall _wall = new Wall(_mapWidth, _mapHeight, _symWall);
+        private static Snake _snake= new Snake(new Point(_startX, _startY, _symSnake), startLength, Direction.RIGHT);
+        private static FoodCreator _foodCreator= new FoodCreator(_mapWidth, _mapHeight, _symFood);
+        private static Point _food = _foodCreator.CreateFood();
+        public static void ChangeMapSize(int mapWidth, int mapHeight)
         {
-            mapWidth = _mapWidth;
-            mapHeight = _mapHeight;
-            startX = mapWidth / 2;
-            startY = mapHeight / 2;
+            _mapWidth = mapWidth;
+            _mapHeight = mapHeight;
+            _startX = mapWidth / 2;
+            _startY = mapHeight / 2;
+            Init();
         }
-        
+        public static void ChangeSnakeSpeed(int snakeSpeed)
+        {
+            Game._snakeSpeed = snakeSpeed;
+        }
+
+        private static void Init()
+        {
+            _wall = new Wall(_mapWidth, _mapHeight, _symWall);
+            _snake= new Snake(new Point(_startX, _startY, _symSnake), startLength, Direction.RIGHT);
+            _foodCreator= new FoodCreator(_mapWidth, _mapHeight, _symFood);
+            _food = _foodCreator.CreateFood();
+        }
         public static void Start()
         {
-            wall.Draw();
-            snake.Draw();
-            food.Draw();
-
+            _wall.Draw();
+            _snake.Draw();
+            _food.Draw();
+            
             while (true)
             {
-                if (wall.IsHit(snake) || snake.IsHitTail())
+                if (_wall.IsHit(_snake) || _snake.IsHitTail())
                 {
                     break;
                 }
-                if (snake.Eat(food))
+                
+                if (_snake.Eat(_food))
                 {
-                    food = foodCreator.CreateFood();
-                    food.Draw();
-                }
-                else
-                {
-                    snake.Move();
-                }
-
-                Thread.Sleep(100);
-
-                if (Console.KeyAvailable)
-                {
-                    ConsoleKeyInfo key = Console.ReadKey();
-                    snake.HandleKey(key.Key);
+                    _food = _foodCreator.CreateFood();
+                    _food.Draw();
+                } else {
+                    _snake.Move();
                 }
 
+                Thread.Sleep(_snakeSpeed);
+
+                if (!Console.KeyAvailable) continue;
+                
+                ConsoleKeyInfo key = Console.ReadKey();
+                _snake.HandleKey(key.Key);
             }
         }
     }

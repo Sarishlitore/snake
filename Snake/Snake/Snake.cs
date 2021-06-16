@@ -4,27 +4,27 @@ using System.Linq;
 
 namespace Snake
 {
-    class Snake : Figure
+    internal class Snake : Figure
     {
-        private Direction direction;
+        private Direction _direction;
 
-        public Snake(Point tail, int length, Direction _direction)
+        public Snake(Point tail, int length, Direction direction)
         {
-            direction = _direction;
+            _direction = direction;
             pList = new List<Point>();
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
-                Point p = new Point(tail);
-                p.Move(i, direction);
+                var p = new Point(tail);
+                p.Move(i, _direction);
                 pList.Add(p);
             }
         }
 
         internal void Move()
         {
-            Point tail = pList.First();
+            var tail = pList.First();
             pList.Remove(tail);
-            Point head = GetNextPoint();
+            var head = GetNextPoint();
             pList.Add(head);
             tail.Clear();
             head.Draw();
@@ -32,8 +32,8 @@ namespace Snake
 
         internal bool IsHitTail()
         {
-            Point head = pList.Last();
-            for (int i = 0; i < pList.Count - 2; i++)
+            var head = pList.Last();
+            for (var i = 0; i < pList.Count - 2; i++)
             {
                 if (head.IsHit(pList[i])) return true;
             }
@@ -42,35 +42,23 @@ namespace Snake
 
         private Point GetNextPoint()
         {
-            Point head = pList.Last();
-            Point nextPoint = new Point(head);
-            nextPoint.Move(1, direction);
+            var head = pList.Last();
+            var nextPoint = new Point(head);
+            nextPoint.Move(1, _direction);
             return nextPoint;
         }
 
         public void HandleKey(ConsoleKey key)
         {
-            if (key == ConsoleKey.LeftArrow && direction != Direction.RIGHT)
-            {
-                direction = Direction.LEFT;
-            }
-            else if (key == ConsoleKey.RightArrow && direction != Direction.LEFT)
-            {
-                direction = Direction.RIGHT;
-            }
-            else if (key == ConsoleKey.UpArrow && direction != Direction.DOWN)
-            {
-                direction = Direction.UP;
-            }
-            else if (key == ConsoleKey.DownArrow && direction != Direction.UP) 
-            {
-                direction = Direction.DOWN;
-            }
+            if (key == ConsoleKey.LeftArrow && _direction != Direction.RIGHT) _direction = Direction.LEFT;
+            else if (key == ConsoleKey.RightArrow && _direction != Direction.LEFT) _direction = Direction.RIGHT;
+            else if (key == ConsoleKey.UpArrow && _direction != Direction.DOWN) _direction = Direction.UP;
+            else if (key == ConsoleKey.DownArrow && _direction != Direction.UP) _direction = Direction.DOWN;
         }
 
         internal bool Eat(Point food)
         {
-            Point head = GetNextPoint();
+            var head = GetNextPoint();
             if (head.IsHit(food))
             {
                 food.sym = head.sym;
